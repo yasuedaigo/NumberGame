@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch NumberGuessGame",
+            "request": "launch",
+            "mainClass": "NumberGuessGame",
+            "projectName": "NumberGame_7b60437d"
+        },
+        {
+            "type": "java",
             "name": "Launch NumberGame",
             "request": "launch",
             "mainClass": "NumberGame",
