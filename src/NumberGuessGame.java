@@ -1,9 +1,4 @@
 import java.util.Scanner;
-import java.util.regex.Pattern;
-
-
-import java.time.chrono.IsoChronology;
-import java.util.InputMismatchException;
 import java.util.Random;
 
 public class NumberGuessGame {
@@ -21,27 +16,38 @@ public class NumberGuessGame {
 
     public static void main(String[] args){
         targetNumber = RANDOM.nextInt(RANDOM_NUM_RANGE);
-        System.out.println(INTRODUCTION_MESSAGE);
-        System.out.println(RULE_MESSAGE);
+        System.out.println(targetNumber);
+        showFirstMessage();
         int challengeTimesCounter = COUNT_OF_START;
-        while(challengeTimesCounter <= MAX_CHALLENGE_TIMES){
-            System.out.print(String.format("%d目",challengeTimesCounter));
+        while(!isCountOver(challengeTimesCounter)){
+            showCountMessage(challengeTimesCounter);
             receiveinputNumber();
-            if(inputNumber == targetNumber)
+            if(isCorrect())
             {
-                System.out.println(String.format("すごい！！%d回で当てられちゃった！",challengeTimesCounter));
                 break;
             }
-            if(isCorrect()){
-                System.out.println("もっと小さい数字だよ");
-                challengeTimesCounter++;
-                continue;
-            }
-            System.out.println("もっと大きい数字だよ");
+            showHintMessage();
             challengeTimesCounter++;
         }
-        System.out.println("残念！！ 正解は "+targetNumber+" でした！");
+        showResultMessage(challengeTimesCounter);
         STDIN.close();
+    }
+
+    private static void showResultMessage(int challengeTimesCounter) {
+        if(isCorrect()){
+            System.out.println(String.format("すごい！！%d回で当てられちゃった！",challengeTimesCounter));
+            return;
+        }
+        System.out.println("残念！！ 正解は "+targetNumber+" でした！");
+    }
+
+    private static void showCountMessage(int challengeTimesCounter) {
+        System.out.println(String.format("%d回目",challengeTimesCounter));
+    }
+
+    private static void showFirstMessage() {
+        System.out.println(INTRODUCTION_MESSAGE);
+        System.out.println(RULE_MESSAGE);
     }
 
     private static void receiveinputNumber(){
@@ -51,6 +57,13 @@ public class NumberGuessGame {
             inputStr = STDIN.nextLine();
         }while(!isNumber(inputStr));
         inputNumber = Integer.parseInt(inputStr);
+    }
+
+    private static boolean isCountOver(int challengeTimesCounter){
+        if(challengeTimesCounter <= MAX_CHALLENGE_TIMES){
+            return false;
+        }
+        return true;
     }
 
     private static boolean isNumber(String inputStr) {
@@ -69,18 +82,18 @@ public class NumberGuessGame {
         return false;
     }
 
-    /*private void decideinputNumber(Scanner STDIN){
-        String inputStr;
-        do{
-            inputStr = scan.nextLine();
-        }while(isnotDecimal(inputStr));
-        inputNumber = Integer.parseInt(inputStr);
+    private static boolean isTooBig(){
+        if(targetNumber >= inputNumber){
+            return false;
+        }
+        return true;
     }
 
-    boolean isnotDecimal(String value) {
-        boolean result;
-        Pattern pattern = Pattern.compile("^([1-9]\\d*|0)(\\.\\d+)?$|^(-[1-9]\\d*|0)(\\.\\d+)?$");
-        result = pattern.matcher(value).matches();
-        return !result;
-    }*/
+    private static void showHintMessage(){
+        if(isTooBig()){
+            System.out.println("もっと小さい数字だよ");
+            return;
+        }
+        System.out.println("もっと大きい数字だよ");
+    }
 }
