@@ -11,19 +11,17 @@ public class NumberGuessGame {
     private static final int COUNT_OF_START = 1;
 
     private static final String INTRODUCTION_MESSAGE = "数字を当ててみてね。";
-    private static final String RULE_MESSAGE = String.format("答えられるのは%d回までだよ。",MAX_CHALLENGE_TIMES);
-    
+    private static final String RULE_MESSAGE = String.format("答えられるのは%d回までだよ。", MAX_CHALLENGE_TIMES);
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         targetNumber = RANDOM.nextInt(RANDOM_NUM_RANGE);
         System.out.println(targetNumber);
         showFirstMessage();
         int challengeTimesCounter = COUNT_OF_START;
-        while(!isCountOver(challengeTimesCounter)){
+        while (!isCountOver(challengeTimesCounter)) {
             showCountMessage(challengeTimesCounter);
             receiveinputNumber();
-            if(isCorrect())
-            {
+            if (isCorrect()) {
                 break;
             }
             showHintMessage();
@@ -34,15 +32,15 @@ public class NumberGuessGame {
     }
 
     private static void showResultMessage(int challengeTimesCounter) {
-        if(isCorrect()){
-            System.out.println(String.format("すごい！！%d回で当てられちゃった！",challengeTimesCounter));
+        if (isCorrect()) {
+            System.out.println(String.format("すごい！！%d回で当てられちゃった！", challengeTimesCounter));
             return;
         }
-        System.out.println("残念！！ 正解は "+targetNumber+" でした！");
+        System.out.println("残念！！ 正解は " + targetNumber + " でした！");
     }
 
     private static void showCountMessage(int challengeTimesCounter) {
-        System.out.println(String.format("%d回目",challengeTimesCounter));
+        System.out.println(String.format("%d回目", challengeTimesCounter));
     }
 
     private static void showFirstMessage() {
@@ -50,17 +48,17 @@ public class NumberGuessGame {
         System.out.println(RULE_MESSAGE);
     }
 
-    private static void receiveinputNumber(){
+    private static void receiveinputNumber() {
         String inputStr;
-        do{
+        do {
             System.out.println("数字を入力してね");
             inputStr = STDIN.nextLine();
-        }while(!isNumber(inputStr));
+        } while (!isNumber(inputStr));
         inputNumber = Integer.parseInt(inputStr);
     }
 
-    private static boolean isCountOver(int challengeTimesCounter){
-        if(challengeTimesCounter <= MAX_CHALLENGE_TIMES){
+    private static boolean isCountOver(int challengeTimesCounter) {
+        if (challengeTimesCounter <= MAX_CHALLENGE_TIMES) {
             return false;
         }
         return true;
@@ -70,27 +68,27 @@ public class NumberGuessGame {
         try {
             Integer.parseInt(inputStr);
             return true;
-        } catch (NumberFormatException nfex){
+        } catch (NumberFormatException nfex) {
             return false;
         }
     }
 
-    private static boolean isCorrect(){
-        if(targetNumber == inputNumber){
+    private static boolean isCorrect() {
+        if (targetNumber == inputNumber) {
             return true;
         }
         return false;
     }
 
-    private static boolean isTooBig(){
-        if(targetNumber >= inputNumber){
+    private static boolean isTooBig() {
+        if (targetNumber >= inputNumber) {
             return false;
         }
         return true;
     }
 
-    private static void showHintMessage(){
-        if(isTooBig()){
+    private static void showHintMessage() {
+        if (isTooBig()) {
             System.out.println("もっと小さい数字だよ");
             return;
         }
